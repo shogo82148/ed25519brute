@@ -39,7 +39,7 @@ func generateKey(rand io.Reader, seed [ed25519.SeedSize]byte) ed25519.PrivateKey
 
 func bruteAuthorizedKey(privateKeyChan chan<- ed25519.PrivateKey, idx, total int) {
 	for i := idx; i < 1<<32; i += total {
-		fastRandReader := &fastRandReaderImpl{rand.New(rand.NewSource(rand.Int63()))}
+		fastRandReader := &fastRandReaderImpl{rand.New(rand.NewSource(int64(i)))}
 		var seed [ed25519.SeedSize]byte
 		var encodedPublicKey [encodedPublicKeyLen]byte
 		for {
